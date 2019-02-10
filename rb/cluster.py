@@ -11,7 +11,10 @@ from threading import Lock
 
 from rb.router import PartitionRouter
 from rb.clients import RoutingClient, LocalClient
+import sys
 
+if sys.version_info > (3,):
+    long = int
 
 class HostInfo(object):
 
