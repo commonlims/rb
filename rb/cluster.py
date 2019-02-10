@@ -52,7 +52,8 @@ class HostInfo(object):
 
 def _iter_hosts(iterable):
     if isinstance(iterable, dict):
-        iterable = iterable.iteritems()
+        iterable = iterable.items() if sys.version_info > (3,) else iterable.iteritems()
+
     for item in iterable:
         if isinstance(item, tuple):
             host_id, cfg = item
