@@ -3,7 +3,11 @@ import errno
 import socket
 
 from weakref import ref as weakref
-from itertools import izip
+
+try:
+    from itertools import izip as zip
+except ImportError:
+    pass
 
 from redis import StrictRedis
 from redis.client import list_or_args
@@ -40,7 +44,7 @@ def merge_batch(command_name, arg_promise_tuples):
     @promise.done
     def on_success(value):
         if list_response:
-            for item, (_, promise) in izip(value, arg_promise_tuples):
+            for item, (_, promise) in zip(value, arg_promise_tuples):
                 promise.resolve(item)
         else:
             for _, promise in arg_promise_tuples:
