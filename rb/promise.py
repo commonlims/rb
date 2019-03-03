@@ -161,7 +161,7 @@ def _promise_from_iterable(iterable):
 
 
 def _promise_from_dict(d):
-    d = dict((k, _ensure_promise(v)) for k, v in d.iteritems())
+    d = dict((k, _ensure_promise(v)) for k, v in d.items())
     if not d:
         return Promise.resolved({})
 
@@ -171,9 +171,9 @@ def _promise_from_dict(d):
     def on_success(key, value):
         pending.discard(key)
         if not pending:
-            rv.resolve(dict((k, p.value) for k, p in d.iteritems()))
+            rv.resolve(dict((k, p.value) for k, p in d.items()))
 
-    for key, promise in d.iteritems():
+    for key, promise in d.items():
         promise.done(partial(on_success, key), rv.reject)
 
     return rv

@@ -32,7 +32,7 @@ def extract_keys(args, key_spec):
 def assert_gapless_hosts(hosts):
     if not hosts:
         raise BadHostSetup('No hosts were configured.')
-    for x in xrange(len(hosts)):
+    for x in range(len(hosts)):
         if hosts.get(x) is None:
             raise BadHostSetup('Expected host with ID "%d" but no such '
                                'host was found.' % x)
@@ -132,8 +132,8 @@ class PartitionRouter(BaseRouter):
         assert_gapless_hosts(self.cluster.hosts)
 
     def get_host_for_key(self, key):
-        if isinstance(key, unicode):
+        if isinstance(key, str):
             k = key.encode('utf-8')
         else:
-            k = str(key)
+            raise AssertionError("Expecting str")
         return crc32(k) % len(self.cluster.hosts)
