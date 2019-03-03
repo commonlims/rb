@@ -4,6 +4,7 @@ import uuid
 import shutil
 import socket
 import tempfile
+import six
 
 from contextlib import contextmanager
 from subprocess import Popen, PIPE
@@ -56,7 +57,7 @@ class TestSetup(object):
         self.server_executable = server_executable
         self.servers = []
 
-        for server in xrange(servers):
+        for server in six.range(servers):
             self.spawn_server()
 
     def __enter__(self):
@@ -73,7 +74,7 @@ class TestSetup(object):
         hosts = []
         host_id = 0
         for server in self.servers:
-            for x in xrange(self.databases_each):
+            for x in six.range(self.databases_each):
                 hosts.append({
                     'host_id': host_id,
                     'unix_socket_path': server.socket_path,

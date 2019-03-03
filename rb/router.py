@@ -1,3 +1,4 @@
+import six
 from weakref import ref as weakref
 from binascii import crc32
 
@@ -32,7 +33,7 @@ def extract_keys(args, key_spec):
 def assert_gapless_hosts(hosts):
     if not hosts:
         raise BadHostSetup('No hosts were configured.')
-    for x in xrange(len(hosts)):
+    for x in six.range(len(hosts)):
         if hosts.get(x) is None:
             raise BadHostSetup('Expected host with ID "%d" but no such '
                                'host was found.' % x)

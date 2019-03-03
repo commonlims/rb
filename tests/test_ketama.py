@@ -1,10 +1,11 @@
 from rb.ketama import Ketama
+import six
 
 
 def test_basic():
     def test(k):
         data = {}
-        for i in xrange(1000):
+        for i in six.range(1000):
             tower = k.get_node('a%s' % i)
             data.setdefault(tower, 0)
             data[tower] += 1
