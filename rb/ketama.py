@@ -6,7 +6,7 @@ import six
 
 
 def md5_bytes(key):
-    return map(ord, hashlib.md5(key).digest())
+    return list(map(ord, hashlib.md5(key).digest()))
 
 
 class Ketama(object):

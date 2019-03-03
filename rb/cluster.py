@@ -108,7 +108,7 @@ class Cluster(object):
         self.host_defaults = host_defaults or {}
         for host_config in _iter_hosts(hosts):
             if self.host_defaults:
-                for k, v in self.host_defaults.iteritems():
+                for k, v in six.iteritems(self.host_defaults):
                     host_config.setdefault(k, v)
             self.add_host(**host_config)
 
@@ -151,7 +151,7 @@ class Cluster(object):
     def disconnect_pools(self):
         """Disconnects all connections from the internal pools."""
         with self._lock:
-            for pool in self._pools.itervalues():
+            for pool in self._pools.values():
                 pool.disconnect()
             self._pools.clear()
 
@@ -216,7 +216,7 @@ class Cluster(object):
                                             'not support SSL connections.')
                         opts['connection_class'] = SSLConnection
                         opts.update(('ssl_' + k, v) for k, v in
-                                    (host_info.ssl_options or {}).iteritems())
+                                    (host_info.ssl_options or {}).items())
                 rv = self.pool_cls(**opts)
                 self._pools[host_id] = rv
             return rv
@@ -353,7 +353,7 @@ class Cluster(object):
         # hosts.
         exists = {}
         with self.fanout(*args, **kwargs) as client:
-            for key, commands in mapping.items():
+            for key, commands in list(mapping.items()):
                 targeted = client.target_key(key)
                 for command in filter(is_script_command, commands):
                     script = command[0]
@@ -372,7 +372,7 @@ class Cluster(object):
         # do not already exist.
         results = {}
         with self.fanout(*args, **kwargs) as client:
-            for key, commands in mapping.items():
+            for key, commands in list(mapping.items()):
                 results[key] = []
                 targeted = client.target_key(key)
                 for command in commands:

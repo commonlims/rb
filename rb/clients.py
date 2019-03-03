@@ -328,7 +328,7 @@ class MappingClient(RoutingBaseClient):
 
     def mset(self, *args, **kwargs):
         return Promise.all([self.set(k, v) for k, v in dict(*args, **kwargs)
-                            .iteritems()]).then(lambda x: None)
+                            .items()]).then(lambda x: None)
 
     # Standard redis methods
 
@@ -477,7 +477,7 @@ class FanoutClient(MappingClient):
 
         hosts = self._target_hosts
         if hosts == 'all':
-            hosts = self.connection_pool.cluster.hosts.keys()
+            hosts = list(self.connection_pool.cluster.hosts.keys())
         elif hosts is None:
             raise RuntimeError('Fanout client was not targeted to hosts.')
 

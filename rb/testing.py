@@ -107,7 +107,7 @@ class TestSetup(object):
                                    for x in self.servers)
         now = time.time()
         while unconnected_servers:
-            for server in unconnected_servers.itervalues():
+            for server in unconnected_servers.values():
                 if server.test_connection():
                     unconnected_servers.pop(server.socket_path, None)
                     break

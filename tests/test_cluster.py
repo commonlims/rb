@@ -199,7 +199,7 @@ def test_fanout_targeting_api(cluster):
         client.target(hosts=[0, 1]).set('foo', 42)
         rv = client.target(hosts='all').get('foo')
 
-    assert rv.value.values().count('42') == 2
+    assert list(rv.value.values()).count('42') == 2
 
     # Without hosts this should fail
     with cluster.fanout() as client:
